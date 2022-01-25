@@ -1,7 +1,7 @@
 import { Helmet } from "react-helmet";
 
 import TableMockup from "../TableMockup";
-import "./style.css";
+import StyledApp from "./style";
 
 export default function App() {
   return (
@@ -21,9 +21,9 @@ export default function App() {
           }}
         />
       </Helmet>
-      <div className="App">
+      <StyledApp>
         <TableMockup />
-      </div>
+      </StyledApp>
     </div>
   );
 }
