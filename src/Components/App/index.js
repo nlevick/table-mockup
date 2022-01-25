@@ -3,6 +3,8 @@ import { Helmet } from "react-helmet";
 import TableMockup from "../TableMockup";
 import StyledApp from "./style";
 
+import data from "../../mockData";
+
 export default function App() {
   return (
     <div>
@@ -22,7 +24,7 @@ export default function App() {
         />
       </Helmet>
       <StyledApp>
-        <TableMockup />
+        <TableMockup rowData={data} />
       </StyledApp>
     </div>
   );
