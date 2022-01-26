@@ -5,7 +5,9 @@ import * as status from "../statusEnums";
 import Checkbox from "../Checkbox";
 import TableTools from "./TableTools";
 import StatusCell from "./StatusCell";
+
 import StyledTableContainer from "./style";
+import { default as utils } from "./utils";
 
 TableMockup.propTypes = {
   rowData: PropTypes.arrayOf(
@@ -29,10 +31,7 @@ export default function TableMockup(props) {
   }
 
   function getSelectAllValue() {
-    if (selectedRowCount === rows.length) return status.CHECKED;
-    if (selectedRowCount > 0) return status.INDETERMINATE;
-
-    return status.UNCHECKED;
+    return utils.getSelectAllValue(selectedRowCount, rows.length);
   }
 
   function getSelectedRows() {
