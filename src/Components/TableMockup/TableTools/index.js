@@ -12,6 +12,8 @@ TableTools.propTypes = {
 };
 
 export default function TableTools(props) {
+  const shouldDisable = !Boolean(props.selectedRowCount);
+
   function handleButtonClick() {
     const selectedRows = props.getSelectedRows();
     let message = "The selected available rows are: \n";
@@ -23,19 +25,26 @@ export default function TableTools(props) {
 
   return (
     <StyledTableTools>
-      <Checkbox
-        value={props.selectAllValue}
-        handleChange={props.handleSelectAllChange}
-      />
-      <div>
-        {props.selectedRowCount
-          ? `Selected: ${props.selectedRowCount}`
-          : "None Selected"}
+      <div className="selectionTools">
+        <Checkbox
+          value={props.selectAllValue}
+          handleChange={props.handleSelectAllChange}
+        />
+        <div>
+          {props.selectedRowCount
+            ? `Selected: ${props.selectedRowCount}`
+            : "None Selected"}
+        </div>
       </div>
       <button
         type="button"
         onClick={handleButtonClick}
-        disabled={!props.selectedRowCount}
+        disabled={shouldDisable}
+        title={
+          shouldDisable
+            ? "Select a row to enable"
+            : "Download available selected data"
+        }
       >
         Download Selected
       </button>

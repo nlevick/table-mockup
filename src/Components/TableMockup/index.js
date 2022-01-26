@@ -67,19 +67,22 @@ export default function TableMockup(props) {
         selectAllValue={getSelectAllValue()}
         selectedRowCount={selectedRowCount}
       />
-      <table>
-        <thead>
-          <tr>
-            <th />
-            <th>Name</th>
-            <th>Device</th>
-            <th>Path</th>
-            <th>Status</th>
-          </tr>
-        </thead>
+      <div className="table">
+        <div className="tableHead">
+          <div className="tableRow">
+            <div className="tableCell header" />
+            <div className="tableCell header">Name</div>
+            <div className="tableCell header">Device</div>
+            <div className="tableCell header">Path</div>
+            <div className="tableCell header">Status</div>
+          </div>
+        </div>
         <div className="tableBody">
           {rows.map((r, i) => (
-            <div className="tableRow" key={`${r.name}_${i}`}>
+            <div
+              className={`tableRow ${r.checked ? "selected" : ""}`}
+              key={`${r.name}_${i}`}
+            >
               <div className="tableCell">
                 <Checkbox
                   value={+r.checked}
@@ -93,7 +96,7 @@ export default function TableMockup(props) {
             </div>
           ))}
         </div>
-      </table>
+      </div>
     </StyledTableContainer>
   );
 }
