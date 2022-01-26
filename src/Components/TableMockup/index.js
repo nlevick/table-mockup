@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Checkbox from "../Checkbox";
+import Checkbox, { CHECKED, UNCHECKED, INDETERMINATE } from "../Checkbox";
+import TableTools from "../TableTools";
 import StyledTableContainer from "./style";
 
 TableMockup.propTypes = {
@@ -25,7 +26,14 @@ export default function TableMockup(props) {
     return data.map((row) => ({ ...row, checked: false }));
   }
 
-  function toggleCheckbox(index) {
+  function getSelectAllValue() {
+    if (selectedRowCount === rows.length) return CHECKED;
+    if (selectedRowCount > 0) return INDETERMINATE;
+
+    return UNCHECKED;
+  }
+
+  function toggleRowCheckbox(index) {
     const newRow = rows[index];
     let rowCount = selectedRowCount;
     newRow.checked = !newRow.checked;
@@ -35,11 +43,22 @@ export default function TableMockup(props) {
     setRows(rows);
   }
 
+  function toggleSelectAllRows() {
+    const currentCheckState = getSelectAllValue();
+    const shouldCheckAll =
+      currentCheckState === INDETERMINATE || currentCheckState === UNCHECKED;
+    const newRows = rows.map((r) => ({ ...r, checked: shouldCheckAll }));
+    setRows(newRows);
+    setSelectedRowCount(shouldCheckAll ? newRows.length : 0);
+  }
+
   return (
     <StyledTableContainer>
-      <div>
-        {selectedRowCount ? `Selected: ${selectedRowCount}` : "None Selected"}
-      </div>
+      <TableTools
+        selectedRowCount={selectedRowCount}
+        handleSelectAllChange={toggleSelectAllRows}
+        selectAllValue={getSelectAllValue()}
+      />
       <table>
         <thead>
           <tr>
@@ -50,20 +69,22 @@ export default function TableMockup(props) {
             <th>Status</th>
           </tr>
         </thead>
-        {rows.map((r, i) => (
-          <tr>
-            <td>
-              <Checkbox
-                value={+r.checked}
-                handleChange={() => toggleCheckbox(i)}
-              />
-            </td>
-            <td>{r.name}</td>
-            <td>{r.device}</td>
-            <td>{r.path}</td>
-            <td>{r.status}</td>
-          </tr>
-        ))}
+        <tbody>
+          {rows.map((r, i) => (
+            <tr key={`${r.name}_${i}`}>
+              <td>
+                <Checkbox
+                  value={+r.checked}
+                  handleChange={() => toggleRowCheckbox(i)}
+                />
+              </td>
+              <td>{r.name}</td>
+              <td>{r.device}</td>
+              <td>{r.path}</td>
+              <td>{r.status}</td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </StyledTableContainer>
   );

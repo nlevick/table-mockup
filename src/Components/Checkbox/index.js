@@ -1,8 +1,9 @@
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 
-const CHECKED = 1;
-const INDETERMINATE = -1;
+export const CHECKED = 1;
+export const UNCHECKED = 0;
+export const INDETERMINATE = -1;
 
 Checkbox.propTypes = {
   value: PropTypes.number.isRequired,
