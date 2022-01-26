@@ -14,7 +14,7 @@ TableTools.propTypes = {
 export default function TableTools(props) {
   function handleButtonClick() {
     const selectedRows = props.getSelectedRows();
-    let message = "The selected rows are: \n";
+    let message = "The selected available rows are: \n";
     selectedRows.forEach((r) => {
       message += `Device: ${r.device}, Path: ${r.path} \n`;
     });

@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-import Checkbox, { CHECKED, UNCHECKED, INDETERMINATE } from "../Checkbox";
-import TableTools from "../TableTools";
+import * as status from "../statusEnums";
+import Checkbox from "../Checkbox";
+import TableTools from "./TableTools";
+import StatusCell from "./StatusCell";
 import StyledTableContainer from "./style";
 
 TableMockup.propTypes = {
@@ -27,14 +29,14 @@ export default function TableMockup(props) {
   }
 
   function getSelectAllValue() {
-    if (selectedRowCount === rows.length) return CHECKED;
-    if (selectedRowCount > 0) return INDETERMINATE;
+    if (selectedRowCount === rows.length) return status.CHECKED;
+    if (selectedRowCount > 0) return status.INDETERMINATE;
 
-    return UNCHECKED;
+    return status.UNCHECKED;
   }
 
   function getSelectedRows() {
-    return rows.filter((r) => r.checked);
+    return rows.filter((r) => r.checked && r.status === status.AVAILABLE);
   }
 
   function toggleRowCheckbox(index) {
@@ -50,7 +52,8 @@ export default function TableMockup(props) {
   function toggleSelectAllRows() {
     const currentCheckState = getSelectAllValue();
     const shouldCheckAll =
-      currentCheckState === INDETERMINATE || currentCheckState === UNCHECKED;
+      currentCheckState === status.INDETERMINATE ||
+      currentCheckState === status.UNCHECKED;
     const newRows = rows.map((r) => ({ ...r, checked: shouldCheckAll }));
     setRows(newRows);
     setSelectedRowCount(shouldCheckAll ? newRows.length : 0);
@@ -74,22 +77,22 @@ export default function TableMockup(props) {
             <th>Status</th>
           </tr>
         </thead>
-        <tbody>
+        <div className="tableBody">
           {rows.map((r, i) => (
-            <tr key={`${r.name}_${i}`}>
-              <td>
+            <div className="tableRow" key={`${r.name}_${i}`}>
+              <div className="tableCell">
                 <Checkbox
                   value={+r.checked}
                   handleChange={() => toggleRowCheckbox(i)}
                 />
-              </td>
-              <td>{r.name}</td>
-              <td>{r.device}</td>
-              <td>{r.path}</td>
-              <td>{r.status}</td>
-            </tr>
+              </div>
+              <div className="tableCell">{r.name}</div>
+              <div className="tableCell">{r.device}</div>
+              <div className="tableCell">{r.path}</div>
+              <StatusCell status={r.status} />
+            </div>
           ))}
-        </tbody>
+        </div>
       </table>
     </StyledTableContainer>
   );
