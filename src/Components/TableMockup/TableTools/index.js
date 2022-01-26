@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import StyledTableTools from "./style";
-import Checkbox from "../Checkbox";
+import Checkbox from "../../Checkbox";
 
 TableTools.propTypes = {
   getSelectedRows: PropTypes.func.isRequired,
