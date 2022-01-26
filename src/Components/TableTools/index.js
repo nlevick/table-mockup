@@ -5,14 +5,20 @@ import StyledTableTools from "./style";
 import Checkbox from "../Checkbox";
 
 TableTools.propTypes = {
-  selectedRowCount: PropTypes.number.isRequired,
+  getSelectedRows: PropTypes.func.isRequired,
   handleSelectAllChange: PropTypes.func.isRequired,
   selectAllValue: PropTypes.number.isRequired,
+  selectedRowCount: PropTypes.number.isRequired,
 };
 
 export default function TableTools(props) {
   function handleButtonClick() {
-    alert("Insert data");
+    const selectedRows = props.getSelectedRows();
+    let message = "The selected rows are: \n";
+    selectedRows.forEach((r) => {
+      message += `Device: ${r.device}, Path: ${r.path} \n`;
+    });
+    alert(message);
   }
 
   return (
@@ -26,7 +32,11 @@ export default function TableTools(props) {
           ? `Selected: ${props.selectedRowCount}`
           : "None Selected"}
       </div>
-      <button type="button" onClick={handleButtonClick}>
+      <button
+        type="button"
+        onClick={handleButtonClick}
+        disabled={!props.selectedRowCount}
+      >
         Download Selected
       </button>
     </StyledTableTools>

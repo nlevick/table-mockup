@@ -33,6 +33,10 @@ export default function TableMockup(props) {
     return UNCHECKED;
   }
 
+  function getSelectedRows() {
+    return rows.filter((r) => r.checked);
+  }
+
   function toggleRowCheckbox(index) {
     const newRow = rows[index];
     let rowCount = selectedRowCount;
@@ -55,17 +59,18 @@ export default function TableMockup(props) {
   return (
     <StyledTableContainer>
       <TableTools
-        selectedRowCount={selectedRowCount}
+        getSelectedRows={getSelectedRows}
         handleSelectAllChange={toggleSelectAllRows}
         selectAllValue={getSelectAllValue()}
+        selectedRowCount={selectedRowCount}
       />
       <table>
         <thead>
           <tr>
             <th />
             <th>Name</th>
-            <th>Path</th>
             <th>Device</th>
+            <th>Path</th>
             <th>Status</th>
           </tr>
         </thead>
