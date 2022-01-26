@@ -7,7 +7,7 @@ import data from "../../mockData";
 
 export default function App() {
   return (
-    <div>
+    <main>
       <Helmet>
         <html lang="en_US" />
         <meta charSet="utf-8" />
@@ -26,6 +26,6 @@ export default function App() {
       <StyledApp>
         <TableMockup rowData={data} />
       </StyledApp>
-    </div>
+    </main>
   );
 }
