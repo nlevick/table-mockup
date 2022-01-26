@@ -1,6 +1,8 @@
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
+
 import { CHECKED, INDETERMINATE } from "../statusEnums";
+import StyledInput from "./style";
 
 Checkbox.propTypes = {
   value: PropTypes.number.isRequired,
@@ -15,5 +17,5 @@ export default function Checkbox({ value, handleChange }) {
     checkRef.current.indeterminate = value === INDETERMINATE;
   }, [value]);
 
-  return <input type="checkbox" ref={checkRef} onChange={handleChange} />;
+  return <StyledInput type="checkbox" ref={checkRef} onChange={handleChange} />;
 }
