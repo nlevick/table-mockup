@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default styled.div`
   width: 66%;
-  padding: 0.5rem;
+  padding: 1rem;
 
   .table {
     display: table;
